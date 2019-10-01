@@ -27,7 +27,14 @@ function pow(a, b) {
 
 //Fatorial
 function factorial(n) {
-    return (n != 1 && n >= 0) ? n * factorial(n - 1) : 1;
+    let respFat
+
+    if( n <= 1)
+        return (1)
+    else{
+        respFat = n * factorial(n-1)
+        return respFat
+    }
   }
 
 //Somatória
@@ -35,20 +42,12 @@ class Summation{
 
     static summationMServers(init, final, m, p, callback, resp){
 
-        // console.log('Init ' + init)
-        // console.log('Final ' + final)
-        // console.log('M ' + m)
-        // console.log('P ' + p)
-        // console.log('CallBack ' + callback)
-        // console.log('Resp ' + resp)
-        // console.log('Fatorial ' + factorial(init))
-
        if(init != final && init < final){
         resp += callback(m,init,p)
-        this.summationMServers(init + 1, final, m, p, callback, resp)
-       }
-
-       return resp
+        return this.summationMServers(init + 1, final, m, p, callback, resp)
+    }else{
+        return resp += callback(m,init,p)
+        }
    }
 }
 
@@ -105,16 +104,26 @@ export class ClassicSystem {
 }
 
 export class MServers extends Summation{
-    static ResponseTime(m,p){
+    //Probabilidade do servidor não ter requisições
+    static NoRequest(m,p){
 
         let respSummation = super.summationMServers(0,m-1,m,p,(m,n,p)=>{
             return division(pow(multiplication(m,p),n),factorial(n))
         }, 0)
-        
 
-       let resp = division(1,sum(division(pow(multiplication(m,p),m),multiplication(m,factorial(subctration(1,p)))),respSummation))
+        return division(1,sum(division(pow(multiplication(m,p),m),multiplication(factorial(m),subctration(1,p))),respSummation)).toFixed(2)
 
-        return resp
+    }
 
+    //Probabilidade dos servidores estarem ocupados
+    static BusyServers(m,p){
+        return  multiplication(this.NoRequest(m,p),division(pow(multiplication(m,p),m),multiplication(factorial(m),subctration(1,p))))
+    }
+
+    //Tempo medio de resposta
+    static AverageResponseTime(m,p,u){
+        let t = multiplication(m,subctration(1,p))
+        console.log("T  " + t)
+        return  multiplication(division(1,u),division(this.BusyServers(m,p),multiplication(m,subctration(1,p))))
     }
 }
