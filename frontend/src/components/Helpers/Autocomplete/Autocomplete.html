@@ -1,0 +1,10 @@
+<section class="autocomplete">
+   <div class="a-field"><input type="text" :placeholder="placeholder" v-model="keywords" autocomplete="off" @keyup="verificaValue"></div>
+   <div class="items">
+     <ul>
+       <li v-for="item in filterData" @click="selectedItem(item)">{{item.Name}}</li>
+     </ul>
+   </div>
+   <div class="description">{{description}}</div>
+</section>
+

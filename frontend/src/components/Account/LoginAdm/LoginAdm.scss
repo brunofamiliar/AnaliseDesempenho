@@ -1,0 +1,121 @@
+.sec-login {
+  position: relative;
+  top: 50px;
+  width: 67%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 5px;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+  .login_content {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .logo {
+      float: left;
+      width: 55%;
+      height: 150px;
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+      svg {
+        width: 250px;
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+      }
+    }
+    .formulario {
+      float: left;
+      width: 55%;
+      @media (max-width: 800px) {
+        width: calc(100% - 20px);
+        padding: 20px;
+      }
+      form {
+        float: left;
+        width: 100%;
+        .wp-field {
+          float: left;
+          width: 100%;
+          margin: 0 0 20px;
+          border:0;
+          border-bottom: 1px solid #c8c8c8;
+          color: #777;
+          transition: all 0.5s ease;
+          line-height: 1.42857143;
+          border-radius: 3px;
+          background-color: #fff;
+          .icon {
+            width: 25px;
+            height: 25px;
+            float: left;
+            color: #888484;
+            padding: 6px;
+            &.f-valid > svg {
+              color: #43c743;
+            }
+            &.f-invalid > svg {
+              color: #da2a3b;
+            }
+            svg {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .campo {
+            float: left;
+            width: calc(100% - 50px);
+            input {
+              display: block;
+              float: left;
+              height: 34px;
+              padding: 3px;
+              font-size: 0.9em;
+              border: 0;
+              color: #777;
+              width: 100%;
+              outline: none;
+            }
+          }
+          button {
+            width: 80px;
+            height: 34px;
+            float: left;
+          }
+        }
+      }
+      .errors {
+        float: left;
+        width: 100%;
+        min-height: 30px;
+        margin-top: 20px;
+        p {
+          text-align: justify;
+        }
+        ul {
+          margin-top: 10px;
+          li {
+            list-style: none;
+          }
+        }
+      }
+      .separator {
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+        padding: 20px;
+        p{
+            color:#4c4d5a;
+        }
+      }
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}

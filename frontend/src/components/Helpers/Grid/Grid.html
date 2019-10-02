@@ -1,0 +1,54 @@
+<section class="sec-grid">
+
+  <Loading v-if="activeLoading"/>
+
+  <div class="wrapper-grid" v-else-if="dataSource.length">
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th v-if="multcheck"> <input type="checkbox"   @change="checkAllProd" v-model="model.checkAll"> </th>
+          <th v-for="col in columnsVisiable" @click="sortBy(col.key)" :class="{ active: sortKey == col.key }">
+            {{ col.title | capitalize }}
+            <span class="arrow" :class="sortOrders[col.key] > 0 ? 'asc' : 'dsc'">
+            </span>
+          </th>
+          <th v-if="permissons.Update">E</th>
+          <th v-if="permissons.Delete">D</th>
+          <th v-if="columnDetail">V</th>
+        </tr>
+      </thead> 
+      <tbody>
+        <tr v-for="(item,i) in filterData">
+          <td class="columnCenter" v-if="multcheck"><input type="checkbox"  ref="selected_prod" :value="item.Id"></td>
+          <td v-for="col in columnsVisiable" :class="objectClass(col,item)">{{item[col.key]}}</td>
+          <td class="columnCenter" v-if="permissons.Update">
+            <button type="button" class="btn btn-primary" @click="clickItem(item,'eventEdit')"><i class="fas fa-edit"></i></button>
+          </td>
+          <td class="columnCenter" v-if="permissons.Delete">
+            <button type="button" class="btn btn-danger" @click="clickItem(item,'eventDelete')"><i class="fas fa-times"></i></button>
+          </td>
+          <td class="columnCenter" v-if="columnDetail">
+            <button type="button" class="btn btn-info" @click="clickItem(item,'eventDetail')"><i class="fas fa-eye"></i></button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot v-if="paginator.total > paginator.limit">
+        <tr>
+          <td class="barra_tabela" colspan="9" style="padding: 20px 20px;">
+            <div class="paginationNumbers">
+              <em> {{paginator.start}} - {{paginator.end}} <span class="bold">de</span> {{paginator.total}}</em>
+              <button type="button" @click="prevPag"> <i class="fas fa-chevron-left"></i> </button>
+              <button type="button" @click="nextPag"> <i class="fas fa-chevron-right"></i> </button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="info" v-else>
+    <span><i class="fas fa-info-circle"></i> Nenhum registro encontrado</span>
+  </div> 
+
+</section>
