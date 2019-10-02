@@ -49,6 +49,16 @@ class Summation{
         return resp += callback(m,init,p)
         }
    }
+
+   static summationMServersFinitePopulation(init, final, m, p, lambda, mi, k, callback, resp){
+
+    if(init != final && init < final){
+     resp += callback(m,init,p,lambda,mi,k)
+     return this.summationMServers(init + 1, final, m, p, lambda, mi, k, callback, resp)
+ }else{
+     return resp += callback(m,init,p,lambda,mi,k)
+     }
+}
 }
 
 
@@ -122,8 +132,67 @@ export class MServers extends Summation{
 
     //Tempo medio de resposta
     static AverageResponseTime(m,p,u){
-        let t = multiplication(m,subctration(1,p))
-        console.log("T  " + t)
-        return  multiplication(division(1,u),division(this.BusyServers(m,p),multiplication(m,subctration(1,p))))
+        
+        return multiplication(multiplication(division(1,12),division(0.21,multiplication(m,subctration(1,p)))),100)  
+    }
+}
+
+export class MMInfiniteServes {
+    //Media de usuários no sistema
+    static MediaUsersSystem(p0, lambda, mi,n){
+        let p = division(lambda, mi)
+
+        return multiplication(division(pow(p,n),factorial(n)),p0)
+    }
+
+}
+
+export class FiniteCapacity{
+    static LossRate(lambda, mi, b){
+        let p = division(lambda, mi)
+        let fullSystem = multiplication(division(subctration(1,p),subctration(1,pow(p,b+1))),pow(p,b))
+        
+        return  lambda * fullSystem
+    }
+}
+
+export class MServersFiniteCapacity{
+        //Probabilidade do servidor não ter requisições
+        static NoRequest(m,p,b,mi,lambda){
+
+            let respSummation = super.summationMServers(0,m-1,m,p,(m,n,p)=>{
+                return division(pow(multiplication(m,p),n),factorial(n))
+            }, 0)
+    
+            let p0 = division(1,sum(division(pow(multiplication(m,p),b-m+1),multiplication(factorial(m),subctration(1,p))),respSummation))
+            let pb = multiplication(multiplication(division(pow(m,m),factorial(m)),pow(division(lambda,m),b)),p0)
+
+            return lambda * pb 
+    
+        }
+}
+
+export class FinitePopulationServer{
+    // Número médio de requisições na fila
+    static MediaRequests(m,n,p, lambda, mi, k){
+        let respSummation = super.summationMServersFinitePopulation(0,m,m,p,lambda, mi,k, (m,n,p,lambda,mi,k)=>{
+            return   multiplication(pow(division(lambda,mi),n),division(factorial(k),factorial(subctration(k,n))))
+        }, 0)
+
+        return  subctration(k,multiplication(division(subctration(lambda,mi),lambda),subctration(1-respSummation)))
+    }
+}
+
+export class FinitePopulationEndlessServers{
+    // Número médio de clientes no sistema de banco dedados
+    static AverageNumberBank(k,lambda,mi){
+        return division(multiplication(k,division(lambda,mi)),sum(1,division(lambda,mi)))
+    }
+}
+
+export class CapacityServersPopulation{
+    //Propabilidade de N usuários estarem no sistema
+    static ProbabilityNSystemUsers(lambda, mi, m, n, b, k, p0){
+        return multiplication(multiplication(pow(division(lambda,mi),n),multiplication(division(k,n),p0)),100).toFixed(2)
     }
 }
