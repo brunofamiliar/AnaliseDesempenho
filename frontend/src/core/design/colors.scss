@@ -1,0 +1,25 @@
+$color-body-bg: #f9f7f5;
+$color-text: #4c4d5a;
+$color-heading-text: #35495e;
+
+// LINKS
+$color-link-text: #39a275;
+$color-link-text-active: $color-text;
+
+// INPUTS
+$color-input-border: lighten($color-heading-text, 50%);
+
+// BUTTONS
+$color-button-bg: $color-link-text;
+$color-button-disabled-bg: darken(desaturate($color-button-bg, 20%), 10%);
+$color-button-text: #fff;
+$color-button-enable:#009661;
+$color-button-disable:red;
+
+// FUNDO
+$color-fundo: #ebebeb;
+$color-fundo-second: #fff;
+//COR PRIMARIA
+$color-primary: #002E6B;
+$color-secondary : #252a2f;
+$color-transparent: rgba(0,0,0,.3);
